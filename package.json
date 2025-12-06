@@ -169,6 +169,7 @@
     "retry": "^0.12.0",
     "rimraf": "^2.7.1",
     "router": "^2.2.0",
+    "routes": "^2.1.0",
     "safe-buffer": "^5.2.1",
     "safer-buffer": "^2.1.2",
     "scheduler": "^0.27.0",
@@ -221,7 +222,6 @@
     "zeptomatch": "^2.0.2",
     "zod": "^4.1.13"
   },
-  "devDependencies": {},
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
     "build": "tsc",
@@ -231,5 +231,10 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "@types/body-parser": "^1.19.6",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6"
+  }
 }
