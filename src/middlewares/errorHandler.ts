@@ -1,10 +1,10 @@
-import { Request, Response, NextFunction } from "express";
+import { ErrorRequestHandler } from "express";
 
-export function errorHandler(err: any, req: Request, res: Response, next: NextFunction) {
+export const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
   console.error("Error:", err);
 
   return res.status(400).json({
     status: "error",
     message: err.message || "Internal server error"
   });
-}
+};

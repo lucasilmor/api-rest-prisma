@@ -1,40 +1,28 @@
+import { CreateUserDTO } from "../dtos/CreateUserDTO";
+import { UpdateUserDTO } from "../dtos/UpdateUserDTO";
 import { prisma } from "../prisma";
+import { User } from "@prisma/client";
 
 //post
-export async function createUser(data: any) {
-  const { name, email, password } = data;
-
-  if (!name || !email || !password) {
-    throw new Error("campos não preenchidos");
-  }
-
-  const emailExists = await prisma.user.findUnique({
-    where: { email },
+export async function createUser(data: CreateUserDTO): Promise<User> {
+  const user = await prisma.user.create({
+    data,
   });
-  if (emailExists) throw new Error("Email já cadastrado");
-
-  return prisma.user.create({
-    data: { name, email, password },
-  });
+  return user;
 }
 
 //get all
-export function getUsers() {
+export async function getUsers(): Promise<User[]> {
   return prisma.user.findMany();
 }
 
 //get by id
-export async function getUserById(id: string) {
-  const user = await prisma.user.findUnique({ where: { id } });
-  if (!user) throw new Error("Usuário não encontrado");
-  return user;
+export async function getUserById(id: string): Promise<User | null> {
+  return prisma.user.findUnique({ where: { id } });
 }
 
 //put
-export async function updateUser(id: string, data: any) {
-  const user = await prisma.user.findUnique({ where: { id } });
-  if (!user) throw new Error("User not found");
-
+export async function updateUser(id: string, data: UpdateUserDTO): Promise<User> {
   return prisma.user.update({
     where: { id },
     data,
@@ -42,9 +30,6 @@ export async function updateUser(id: string, data: any) {
 }
 
 //delete
-export async function deleteUser(id: string) {
-  const user = await prisma.user.findUnique({ where: { id } });
-  if (!user) throw new Error("User not found");
-
+export async function deleteUser(id: string): Promise<void> {
   await prisma.user.delete({ where: { id } });
 }
